@@ -1,0 +1,14 @@
+{
+  "name": "focus-os-core",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "build": "node --no-warnings build.mjs",
+    "test": "node --test test/planner.test.ts test/estimator.test.ts test/migration.test.ts test/acceptance.v2.test.ts test/smoke.test.mjs test/app.test.mjs test/migration.app.test.mjs test/v2.integration.test.ts test/v2.app.test.mjs test/lifestyle.test.ts test/pwa.test.mjs test/ui2.app.test.mjs",
+    "test:acceptance": "ACCEPT=1 node --test test/acceptance.v2.test.ts"
+  }
+}

@@ -1,0 +1,172 @@
+{
+ "app": "focus-os",
+ "schema": 1,
+ "version": 4,
+ "subjects": [
+  {
+   "id": "s1",
+   "name": "Matemáticas II",
+   "color": "#c9a45c"
+  },
+  {
+   "id": "s2",
+   "name": "Física",
+   "color": "#8fa8c8"
+  }
+ ],
+ "settings": {
+  "availability": {
+   "0": [
+    {
+     "start": 600,
+     "end": 810
+    },
+    {
+     "start": 960,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ],
+   "1": [
+    {
+     "start": 1020,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ],
+   "2": [
+    {
+     "start": 1060,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ],
+   "3": [
+    {
+     "start": 930,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ],
+   "4": [
+    {
+     "start": 930,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ],
+   "5": [
+    {
+     "start": 930,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ],
+   "6": [
+    {
+     "start": 600,
+     "end": 810
+    },
+    {
+     "start": 960,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ]
+  },
+  "blockedDates": [],
+  "maxDayMin": 240,
+  "preferredMin": 50,
+  "maxSessionMin": 90,
+  "minSessionMin": 25,
+  "minGapMin": 10,
+  "horizonDays": 28
+ },
+ "works": [
+  {
+   "id": "e1",
+   "kind": "exam",
+   "subjectId": "s1",
+   "title": "Examen antiguo",
+   "dueDate": "2026-10-21",
+   "estMin": 240,
+   "difficulty": 3,
+   "importance": 4,
+   "readiness": 20,
+   "status": "pending",
+   "notes": "x"
+  },
+  {
+   "id": "t1",
+   "kind": "task",
+   "subjectId": "s2",
+   "title": "Tarea antigua",
+   "dueDate": "2026-10-16",
+   "estMin": 90,
+   "difficulty": 3,
+   "importance": 3,
+   "readiness": 0,
+   "status": "pending"
+  }
+ ],
+ "blocks": [
+  {
+   "id": "h1",
+   "workId": "t1",
+   "date": "2026-10-09",
+   "start": 1020,
+   "end": 1070,
+   "status": "done",
+   "manual": false,
+   "actualMin": 55
+  },
+  {
+   "id": "h2",
+   "workId": "e1",
+   "date": "2026-10-10",
+   "start": 600,
+   "end": 650,
+   "status": "skipped",
+   "manual": false
+  },
+  {
+   "id": "h3",
+   "workId": "e1",
+   "date": "2026-10-11",
+   "start": 600,
+   "end": 650,
+   "status": "rescheduled",
+   "manual": false
+  },
+  {
+   "id": "m1",
+   "workId": "e1",
+   "date": "2026-10-17",
+   "start": 750,
+   "end": 800,
+   "status": "planned",
+   "manual": true
+  }
+ ]
+}

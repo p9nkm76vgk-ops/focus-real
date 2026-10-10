@@ -1,0 +1,407 @@
+{
+ "app": "focus-os",
+ "schema": 2,
+ "exportedAt": "2026-10-12T08:00:00.000Z",
+ "version": 5,
+ "subjects": [
+  {
+   "id": "2dbec84c-4ee7-4a1d-91bc-bc92f0eb0b3e",
+   "name": "Matemáticas II",
+   "color": "#c9a45c"
+  },
+  {
+   "id": "f2f95082-1318-461d-a14d-91b44c578b3a",
+   "name": "Física",
+   "color": "#b87333"
+  },
+  {
+   "id": "25b8edfa-fc4a-44ea-88df-aa0a02ea6b5f",
+   "name": "Química",
+   "color": "#8fa8c8"
+  },
+  {
+   "id": "f0a6fedc-cb51-4bc1-9156-21d1c1d7d7c7",
+   "name": "Business",
+   "color": "#9c8fc8"
+  },
+  {
+   "id": "78b0c96c-ada3-48b4-b82b-9d1cf26810ce",
+   "name": "Lengua Castellana",
+   "color": "#7fb89a"
+  },
+  {
+   "id": "b635c01a-ac0f-4bd9-86cf-47d1f70a8416",
+   "name": "Catalán",
+   "color": "#c88f8f"
+  },
+  {
+   "id": "f2ed792f-9162-496a-9c45-c50c9f967917",
+   "name": "Inglés",
+   "color": "#d4c08a"
+  },
+  {
+   "id": "78166682-7499-420b-9a04-5cf4d2a33780",
+   "name": "Historia de España",
+   "color": "#6f9fb0"
+  },
+  {
+   "id": "5d6cbc2e-462c-4dc7-9667-2b7be871ed7b",
+   "name": "Historia de la Filosofía",
+   "color": "#b08fb8"
+  }
+ ],
+ "works": [
+  {
+   "id": "4c36db05-f5ef-444b-9cfc-3438cec59824",
+   "kind": "exam",
+   "title": "Parcial mates",
+   "subjectId": "2dbec84c-4ee7-4a1d-91bc-bc92f0eb0b3e",
+   "dueDate": "2026-10-21",
+   "difficulty": 3,
+   "importance": 4,
+   "learn": "problemas",
+   "status": "pending",
+   "notes": "",
+   "createdAt": 1791792000000,
+   "updatedAt": 1791792000000,
+   "autoEst": true,
+   "estMin": 460,
+   "goal": "notable",
+   "topics": [
+    {
+     "id": "8b4ba5da-6ff6-4826-b393-72299c85f2b5",
+     "name": "Límites",
+     "difficulty": 4,
+     "size": 3,
+     "mastery": 1.5,
+     "explicit": true
+    },
+    {
+     "id": "ffd65a83-97eb-4f35-85bc-e3006ecba136",
+     "name": "Derivadas",
+     "difficulty": 5,
+     "size": 4,
+     "mastery": 1,
+     "explicit": true
+    },
+    {
+     "id": "3bdbd527-1a19-4652-a161-1465b2090d97",
+     "name": "Integrales",
+     "difficulty": 3,
+     "size": 3,
+     "mastery": 0,
+     "explicit": false
+    }
+   ],
+   "readiness": 28,
+   "estimate": {
+    "totalMin": 461,
+    "investedMin": 45,
+    "remainingMin": 416,
+    "lowMin": 291,
+    "highMin": 540,
+    "learnMin": 126,
+    "practiceMin": 235,
+    "reviewMin": 54,
+    "perTopic": [
+     {
+      "id": "8b4ba5da-6ff6-4826-b393-72299c85f2b5",
+      "name": "Límites",
+      "remainingMin": 85
+     },
+     {
+      "id": "ffd65a83-97eb-4f35-85bc-e3006ecba136",
+      "name": "Derivadas",
+      "remainingMin": 174
+     },
+     {
+      "id": "3bdbd527-1a19-4652-a161-1465b2090d97",
+      "name": "Integrales",
+      "remainingMin": 157
+     }
+    ],
+    "factors": [
+     "3 tema(s), cantidad media 3.3/5",
+     "Dificultad alta (+22%)",
+     "Preparación previa: −35% del trabajo",
+     "Tipo: problemas (+30%) · objetivo: notable",
+     "Repaso final incluido una vez: 54 min",
+     "Estimación inicial: aún no hay historial suficiente"
+    ],
+    "confidence": "inicial",
+    "provisional": false,
+    "calibration": {
+     "factor": 1,
+     "n": 0,
+     "level": "ninguno"
+    }
+   }
+  },
+  {
+   "id": "c4890195-9e95-46cd-9b5f-710d93a210e5",
+   "kind": "task",
+   "title": "Problemas física",
+   "subjectId": "f2f95082-1318-461d-a14d-91b44c578b3a",
+   "dueDate": "2026-10-16",
+   "difficulty": 3,
+   "importance": 3,
+   "learn": "ejercicios",
+   "status": "pending",
+   "notes": "",
+   "createdAt": 1791792000000,
+   "updatedAt": 1791792000000,
+   "manualEstMin": 90,
+   "autoEst": false,
+   "estMin": 90,
+   "size": 3,
+   "readiness": 0,
+   "corrections": [
+    {
+     "at": 1791792000000,
+     "from": null,
+     "to": 90
+    }
+   ]
+  }
+ ],
+ "blocks": [
+  {
+   "id": "auto:4c36db05-f5ef-444b-9cfc-3438cec59824:main:2026-10-12:1020",
+   "workId": "4c36db05-f5ef-444b-9cfc-3438cec59824",
+   "date": "2026-10-12",
+   "start": 1020,
+   "end": 1070,
+   "status": "done",
+   "manual": false,
+   "part": "main",
+   "topicId": "8b4ba5da-6ff6-4826-b393-72299c85f2b5",
+   "actualMin": 45,
+   "log": {
+    "actualMin": 45,
+    "topicId": "8b4ba5da-6ff6-4826-b393-72299c85f2b5",
+    "progress": 50,
+    "difficulty": 3,
+    "goalMet": true,
+    "interrupted": false
+   }
+  },
+  {
+   "id": "auto:4c36db05-f5ef-444b-9cfc-3438cec59824:main:2026-10-12:1080",
+   "workId": "4c36db05-f5ef-444b-9cfc-3438cec59824",
+   "date": "2026-10-12",
+   "start": 1080,
+   "end": 1119,
+   "status": "planned",
+   "manual": false,
+   "part": "main",
+   "topicId": "ffd65a83-97eb-4f35-85bc-e3006ecba136"
+  },
+  {
+   "id": "auto:4c36db05-f5ef-444b-9cfc-3438cec59824:main:2026-10-13:1060",
+   "workId": "4c36db05-f5ef-444b-9cfc-3438cec59824",
+   "date": "2026-10-13",
+   "start": 1060,
+   "end": 1110,
+   "status": "planned",
+   "manual": false,
+   "part": "main",
+   "topicId": "3bdbd527-1a19-4652-a161-1465b2090d97"
+  },
+  {
+   "id": "auto:4c36db05-f5ef-444b-9cfc-3438cec59824:main:2026-10-14:930",
+   "workId": "4c36db05-f5ef-444b-9cfc-3438cec59824",
+   "date": "2026-10-14",
+   "start": 930,
+   "end": 980,
+   "status": "planned",
+   "manual": false,
+   "part": "main",
+   "topicId": "ffd65a83-97eb-4f35-85bc-e3006ecba136"
+  },
+  {
+   "id": "auto:c4890195-9e95-46cd-9b5f-710d93a210e5:main:2026-10-14:990",
+   "workId": "c4890195-9e95-46cd-9b5f-710d93a210e5",
+   "date": "2026-10-14",
+   "start": 990,
+   "end": 1030,
+   "status": "planned",
+   "manual": false,
+   "part": "main"
+  },
+  {
+   "id": "auto:4c36db05-f5ef-444b-9cfc-3438cec59824:main:2026-10-15:930",
+   "workId": "4c36db05-f5ef-444b-9cfc-3438cec59824",
+   "date": "2026-10-15",
+   "start": 930,
+   "end": 980,
+   "status": "planned",
+   "manual": false,
+   "part": "main",
+   "topicId": "3bdbd527-1a19-4652-a161-1465b2090d97"
+  },
+  {
+   "id": "auto:4c36db05-f5ef-444b-9cfc-3438cec59824:main:2026-10-16:930",
+   "workId": "4c36db05-f5ef-444b-9cfc-3438cec59824",
+   "date": "2026-10-16",
+   "start": 930,
+   "end": 980,
+   "status": "planned",
+   "manual": false,
+   "part": "main",
+   "topicId": "8b4ba5da-6ff6-4826-b393-72299c85f2b5"
+  },
+  {
+   "id": "auto:4c36db05-f5ef-444b-9cfc-3438cec59824:main:2026-10-17:600",
+   "workId": "4c36db05-f5ef-444b-9cfc-3438cec59824",
+   "date": "2026-10-17",
+   "start": 600,
+   "end": 650,
+   "status": "planned",
+   "manual": false,
+   "part": "main",
+   "topicId": "ffd65a83-97eb-4f35-85bc-e3006ecba136"
+  },
+  {
+   "id": "man:c64f35d0-1c35-4ac7-9652-27704d60fc6e",
+   "workId": "c4890195-9e95-46cd-9b5f-710d93a210e5",
+   "date": "2026-10-17",
+   "start": 750,
+   "end": 800,
+   "status": "planned",
+   "manual": true
+  },
+  {
+   "id": "auto:4c36db05-f5ef-444b-9cfc-3438cec59824:main:2026-10-18:600:r1",
+   "workId": "4c36db05-f5ef-444b-9cfc-3438cec59824",
+   "date": "2026-10-18",
+   "start": 600,
+   "end": 622,
+   "status": "planned",
+   "manual": false,
+   "part": "main",
+   "topicId": "3bdbd527-1a19-4652-a161-1465b2090d97"
+  },
+  {
+   "id": "auto:4c36db05-f5ef-444b-9cfc-3438cec59824:review:2026-10-19:1020",
+   "workId": "4c36db05-f5ef-444b-9cfc-3438cec59824",
+   "date": "2026-10-19",
+   "start": 1020,
+   "end": 1070,
+   "status": "planned",
+   "manual": false,
+   "part": "review",
+   "topicId": "8b4ba5da-6ff6-4826-b393-72299c85f2b5"
+  },
+  {
+   "id": "auto:4c36db05-f5ef-444b-9cfc-3438cec59824:review:2026-10-19:1080",
+   "workId": "4c36db05-f5ef-444b-9cfc-3438cec59824",
+   "date": "2026-10-19",
+   "start": 1080,
+   "end": 1110,
+   "status": "planned",
+   "manual": false,
+   "part": "review",
+   "topicId": "ffd65a83-97eb-4f35-85bc-e3006ecba136"
+  },
+  {
+   "id": "auto:4c36db05-f5ef-444b-9cfc-3438cec59824:review:2026-10-20:1060:r1",
+   "workId": "4c36db05-f5ef-444b-9cfc-3438cec59824",
+   "date": "2026-10-20",
+   "start": 1060,
+   "end": 1085,
+   "status": "planned",
+   "manual": false,
+   "part": "review",
+   "topicId": "3bdbd527-1a19-4652-a161-1465b2090d97"
+  }
+ ],
+ "settings": {
+  "availability": {
+   "0": [
+    {
+     "start": 600,
+     "end": 810
+    },
+    {
+     "start": 960,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ],
+   "1": [
+    {
+     "start": 1020,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ],
+   "2": [
+    {
+     "start": 1060,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ],
+   "3": [
+    {
+     "start": 930,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ],
+   "4": [
+    {
+     "start": 930,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ],
+   "5": [
+    {
+     "start": 930,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ],
+   "6": [
+    {
+     "start": 600,
+     "end": 810
+    },
+    {
+     "start": 960,
+     "end": 1230
+    },
+    {
+     "start": 1275,
+     "end": 1320
+    }
+   ]
+  },
+  "blockedDates": [],
+  "maxDayMin": 240,
+  "preferredMin": 50,
+  "maxSessionMin": 90,
+  "minSessionMin": 25,
+  "minGapMin": 10,
+  "horizonDays": 28
+ }
+}

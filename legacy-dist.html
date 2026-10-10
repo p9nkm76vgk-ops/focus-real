@@ -1,0 +1,427 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="color-scheme" content="dark"><title>Focus OS</title><link rel=manifest href=manifest.webmanifest><link rel=apple-touch-icon href=icon-180.png><meta name=apple-mobile-web-app-capable content=yes><meta name=mobile-web-app-capable content=yes><meta name=apple-mobile-web-app-title content="Focus OS"><meta name=apple-mobile-web-app-status-bar-style content=black-translucent><meta name=theme-color content="#0e0e0f"><style>:root{--bg:#0e0e0f;--s1:#171718;--s2:#202022;--bd:#2c2c2f;--gold:#c9a45c;--gold2:#8a6d36;--tx:#ece8df;--mu:#8e8a80;--red:#d46a5e;--grn:#7fb89a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:500;margin:.2em 0 .6em}h1{font-size:1.9rem}h3{font-size:1.1rem;color:var(--gold)}
+nav{position:fixed;z-index:5;background:var(--s1);border-top:1px solid var(--bd);bottom:0;left:0;right:0;display:flex;padding-bottom:env(safe-area-inset-bottom,0px)}
+nav b{display:none}nav a{flex:1;text-align:center;padding:12px 2px;font-size:.7rem;color:var(--mu);cursor:pointer;min-height:48px}nav a.on{color:var(--gold);box-shadow:inset 0 2px var(--gold)}
+#main{padding:18px 16px 96px;max-width:1100px;margin:0 auto}
+@media(min-width:900px){nav{top:0;right:auto;width:220px;flex-direction:column;border-top:0;border-right:1px solid var(--bd);padding:24px 12px}nav b{display:block;font:500 1.3rem Georgia,serif;color:var(--gold);padding:0 12px 20px}nav a{flex:0;text-align:left;font-size:1rem;padding:12px;border-radius:10px}nav a.on{background:var(--s2);box-shadow:none}#main{margin-left:220px;padding:32px 40px;max-width:none}}
+.card,.blk{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:14px 16px;margin:0 0 12px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.m,small,em{color:var(--mu)}small{display:block}em{font-size:.8rem;font-style:normal}
+.blk{border-left:4px solid var(--c);display:flex;gap:8px;align-items:center;flex-wrap:wrap}.blk small{flex:1 1 100%}.blk.done{opacity:.6}.blk.skipped,.blk.rescheduled{opacity:.45;border-left-style:dashed}.blk.planned.manual{background:var(--s2)}
+button,input,select,textarea{font:inherit;color:var(--tx);background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:10px 14px;min-height:44px}
+button{cursor:pointer}button.pri{background:var(--gold);color:#16130c;border-color:var(--gold);font-weight:600}button.danger{color:var(--red)}
+label{display:block;margin:0 0 10px;color:var(--mu);font-size:.85rem}label input,label select,label textarea{display:block;width:100%;margin-top:4px;color:var(--tx)}
+html{-webkit-text-size-adjust:100%}button,a,summary{touch-action:manipulation}@media(hover:none){button:active{background:var(--gold2)}}dialog{overflow:auto;max-height:90vh;max-height:90dvh;background:var(--s1);color:var(--tx);border:1px solid var(--gold2);border-radius:16px;width:min(480px,94vw);max-height:90vh}dialog::backdrop{background:#000b}
+.row{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:8px}.err{color:var(--red);min-height:1.2em;margin:4px 0}
+.item{display:flex;gap:12px;align-items:center;cursor:pointer}.item>div{flex:1}.dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.tag{font-size:.72rem;padding:2px 8px;border-radius:99px;border:1px solid var(--gold2);color:var(--gold)}.tag.hi{border-color:var(--red);color:var(--red)}
+.warn{border-color:var(--red);color:#f0b8b0}.bar{height:8px;border-radius:4px;background:var(--s2);margin:4px 0 10px;overflow:hidden}.bar i{display:block;height:100%;background:var(--gold)}
+.wk{display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));gap:8px;overflow-x:auto}.wk .blk{padding:8px 10px;font-size:.85rem}.wk h3{font-size:.9rem;margin:0 0 6px}
+.cols{display:flex;gap:6px;align-items:flex-end;height:120px}.cols div{flex:1;display:flex;gap:2px;align-items:flex-end;height:100%}.cols i{flex:1;background:var(--gold);border-radius:3px 3px 0 0}.cols i.p{background:var(--s2);border:1px solid var(--bd)}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:90px;background:var(--s2);border:1px solid var(--gold2);padding:10px 16px;border-radius:12px;display:none;z-index:9}
+</style></head><body>
+<nav><b>Focus OS</b><a data-a=nav data-r=hoy>Hoy</a><a data-a=nav data-r=tar>Tareas</a><a data-a=nav data-r=exa>Exámenes</a><a data-a=nav data-r=cal>Calendario</a><a data-a=nav data-r=asg>Asignaturas</a><a data-a=nav data-r=seg>Progreso</a><a data-a=nav data-r=aj>Ajustes</a></nav>
+<div id=main>Cargando…</div><dialog id=dlg></dialog><div id=toast role=status></div>
+<script>
+const P=(()=>{                                                                                       
+
+const hm = (h        , m = 0) => h * 60 + m;
+const wk        = [{ start: hm(15, 30), end: hm(20, 30) }, { start: hm(21, 15), end: hm(22) }];
+const we        = [{ start: hm(10), end: hm(13, 30) }, { start: hm(16), end: hm(20, 30) }, { start: hm(21, 15), end: hm(22) }];
+/** Valores iniciales editables. Lun/Mar descuentan llegada a casa (16:30 / 17:10) y cena. */
+const DEFAULT_SETTINGS           = {
+  availability: { 0: we, 1: [{ start: hm(17), end: hm(20, 30) }, { start: hm(21, 15), end: hm(22) }],
+    2: [{ start: hm(17, 40), end: hm(20, 30) }, { start: hm(21, 15), end: hm(22) }], 3: wk, 4: wk, 5: wk, 6: we },
+  blockedDates: [], maxDayMin: 240, preferredMin: 50, maxSessionMin: 90, minSessionMin: 25, minGapMin: 10, horizonDays: 28,
+};
+/** Función de prioridad: desempate entre demandas con el mismo plazo. Ajustable. */
+const PRIORITY_WEIGHTS = { importance: 2, difficulty: 1, exam: 3, unreadiness: 2, urgency: 10 };
+const REVIEW_SHARE = 0.25;   // parte del trabajo de un examen reservada a repaso final
+const REVIEW_DAYS = 2;       // el repaso ocupa los últimos N días antes del examen
+const EXAM_BUFFER_MIN = 60;  // margen antes de la hora del examen el mismo día
+
+const addDays = (d        , n        ) => { const t = new Date(d + 'T00:00:00Z'); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0, 10); };
+const weekday = (d        ) => new Date(d + 'T00:00:00Z').getUTCDay();
+const daysBetween = (a        , b        ) => Math.round((Date.parse(b + 'T00:00:00Z') - Date.parse(a + 'T00:00:00Z')) / 864e5);
+const dur = (b                                ) => b.end - b.start;
+const up5 = (m        ) => Math.ceil(m / 5) * 5;
+const cmp = (a       , b       ) => a.date.localeCompare(b.date) || a.start - b.start || a.id.localeCompare(b.id);
+
+function priority(w      , now     )         {
+  const P = PRIORITY_WEIGHTS; const left = Math.max(0, daysBetween(now.date, w.dueDate));
+  return w.importance * P.importance + w.difficulty * P.difficulty + (w.kind === 'exam' ? P.exam + (100 - w.readiness) / 100 * P.unreadiness : 0) + P.urgency / (left + 1);
+}
+/** Minutos totales a trabajar. Examen: la preparación actual reduce hasta un 50 % la estimación. */
+const totalNeed = (w      ) => w.estimate ? w.estimate.remainingMin : w.kind === 'exam' ? Math.round(w.estMin * (1 - 0.5 * w.readiness / 100)) : w.estMin;
+
+function subtract(wins       , cuts       )        {
+  let out = wins.map(w => ({ ...w }));
+  for (const c of cuts) {
+    const next        = [];
+    for (const w of out) {
+      if (c.end <= w.start || c.start >= w.end) { next.push(w); continue; }
+      if (c.start > w.start) next.push({ start: w.start, end: c.start });
+      if (c.end < w.end) next.push({ start: c.end, end: w.end });
+    }
+    out = next;
+  }
+  return out.filter(w => w.end > w.start).sort((a, b) => a.start - b.start);
+}
+
+                                                                                                                                                                         
+                                                                         
+
+/** Planificador determinista e idempotente. Función pura: (estado, ahora) → nuevo estado. */
+function plan(input                                                        , now     )             {
+  const s = input.settings;
+  const active = (w       ) => !!w && (w.status === 'pending' || w.status === 'in_progress');
+  const byId = new Map(input.works.map(w => [w.id, w]));
+  const isPast = (b       ) => b.date < now.date || (b.date === now.date && b.end <= now.minute);
+
+  const history          = [], manualF          = [], autoF          = [], missed          = [];
+  for (const b of input.blocks) {
+    if (b.status !== 'planned') history.push(b);
+    else if (isPast(b)) missed.push({ ...b });
+    else if (b.manual) manualF.push(b); else autoF.push(b);
+  }
+  const days = new Map             ();
+  const day = (d        ) => { let x = days.get(d); if (!x) { x = { occ: [], total: 0, perWork: new Map() }; days.set(d, x); } return x; };
+  const occupy = (b       ) => { const x = day(b.date); x.occ.push({ start: b.start, end: b.end }); x.total += dur(b); x.perWork.set(b.workId, (x.perWork.get(b.workId) ?? 0) + dur(b)); };
+  history.filter(b => b.status === 'done').forEach(occupy);
+  manualF.forEach(occupy);
+  const free = (date        , clip         ) => {
+    const cuts        = [...s.blockedDates.filter(b => b.date === date), ...day(date).occ.map(o => ({ start: o.start - s.minGapMin, end: o.end + s.minGapMin }))];
+    if (clip && date === now.date) cuts.push({ start: 0, end: up5(now.minute) });
+    return subtract(s.availability[weekday(date)] ?? [], cuts);
+  };
+
+  // 1) Demandas por trabajo activo
+  const warnings            = [], demands           = [];
+  const horizonEnd = addDays(now.date, s.horizonDays);
+  for (const w of input.works.filter(active)) {
+    const done = w.estimate ? 0 /* el estimador ya descuenta el progreso */ : history.filter(b => b.workId === w.id && b.status === 'done').reduce((a, b) => a + (b.actualMin ?? dur(b)), 0);
+    const manual = manualF.filter(b => b.workId === w.id).reduce((a, b) => a + dur(b), 0);
+    const need = Math.max(0, totalNeed(w) - done - manual);
+    const overdue = w.dueDate < now.date || (w.dueDate === now.date && w.dueMinute !== undefined && w.dueMinute <= now.minute);
+    if (overdue) warnings.push({ workId: w.id, type: 'overdue', message: `"${w.title}" está atrasada (${w.dueDate}).` });
+    let last = overdue ? now.date : w.dueDate; const clipped = last > horizonEnd; if (clipped) last = horizonEnd;
+    const cutoff = overdue || clipped ? 1440 : w.kind === 'exam' ? (w.dueMinute ?? hm(9)) - EXAM_BUFFER_MIN : (w.dueMinute ?? 1440);
+    const base = { w, from: now.date, last, cutoff, prio: priority(w, now), clipped };
+    const mainTo = addDays(w.dueDate, -(REVIEW_DAYS + 1));
+    if (w.kind === 'exam' && !overdue && !clipped && need > 0 && mainTo >= now.date) {
+      const review = Math.min(need, Math.round(need * REVIEW_SHARE / 5) * 5);
+      demands.push({ ...base, part: 'main', need: need - review, to: mainTo, ext: last });
+      demands.push({ ...base, part: 'review', need: review, from: addDays(w.dueDate, -REVIEW_DAYS) > now.date ? addDays(w.dueDate, -REVIEW_DAYS) : now.date, to: last });
+    } else demands.push({ ...base, part: 'main', need, to: last });
+  }
+  demands.sort((a, b) => a.last.localeCompare(b.last) || b.prio - a.prio || a.w.id.localeCompare(b.w.id) || a.part.localeCompare(b.part));
+
+  // 2) Conservar sesiones automáticas aún válidas (evita cambios innecesarios)
+  const used = new Set(input.blocks.map(b => b.id));
+  const kept          = [], created          = [], rem = new Map                ();
+  for (const d of demands) {
+    let have = 0;
+    for (const b of autoF.filter(x => x.workId === d.w.id && (x.part ?? 'main') === d.part).sort(cmp)) {
+      if (b.date < d.from || b.date > (d.ext ?? d.to) || (b.date === d.last && b.end > d.cutoff) || have + dur(b) > d.need) continue;
+      if (!free(b.date, false).some(f => f.start <= b.start && b.end <= f.end) || day(b.date).total + dur(b) > s.maxDayMin) continue;
+      occupy(b); kept.push(b); have += dur(b);
+    }
+    rem.set(d, d.need - have);
+  }
+
+  // 3) Cubrir lo que falta: sesiones repartidas por los días menos cargados
+  const fill = (d        , to        , left        )         => {
+    while (left > 0) {
+      let len = Math.min(s.preferredMin, left);
+      if (left - len > 0 && left - len < s.minSessionMin) len = Math.min(left, s.maxSessionMin);
+      const cands                                                                            = [];
+      for (let dt = d.from; dt <= to; dt = addDays(dt, 1)) {
+        const x = day(dt), capLeft = s.maxDayMin - x.total; if (capLeft <= 0) continue;
+        for (const f of free(dt, true)) {
+          const st = up5(f.start), end = Math.min(f.end, dt === d.last ? d.cutoff : 1440);
+          const L = Math.min(len, end - st, capLeft, s.maxSessionMin);
+          if (L >= Math.min(s.minSessionMin, left)) { cands.push({ dt, start: st, L, key: [x.perWork.get(d.w.id) ? 1 : 0, x.total, dt] }); break; }
+        }
+      }
+      if (!cands.length) break;
+      cands.sort((a, b) => a.key[0] - b.key[0] || a.key[1] - b.key[1] || a.key[2].localeCompare(b.key[2]));
+      const c = cands[0];
+      let id = `auto:${d.w.id}:${d.part}:${c.dt}:${c.start}`, k = 1; while (used.has(id)) id = `auto:${d.w.id}:${d.part}:${c.dt}:${c.start}:r${k++}`; used.add(id);
+      const b        = { id, workId: d.w.id, date: c.dt, start: c.start, end: c.start + c.L, status: 'planned', manual: false, part: d.part };
+      occupy(b); created.push(b); left -= c.L;
+    }
+    return left;
+  };
+  const deficit = new Map                (), clippedW = new Set        ();
+  for (const d of demands) {
+    let left = fill(d, d.to, rem.get(d) );
+    if (left > 0 && d.ext && d.ext > d.to) left = fill(d, d.ext, left);
+    if (left > 0 && !d.clipped) deficit.set(d.w.id, (deficit.get(d.w.id) ?? 0) + left);
+    if (d.clipped) clippedW.add(d.w.id);
+  }
+  for (const [id, min] of deficit) { const w = byId.get(id) ; warnings.push({ workId: id, type: 'deficit', deficitMin: min, message: `No caben ${min} min de "${w.title}" antes del ${w.dueDate}. Amplía disponibilidad, reduce la estimación o mueve la fecha.` }); }
+
+  // 4) Cerrar sesiones incumplidas y ensamblar
+  const future = [...manualF, ...kept, ...created];
+  const hasFuture = (id        ) => future.some(b => b.workId === id) && active(byId.get(id));
+  const closed = missed.map(b => ({ ...b, status: (hasFuture(b.workId) ? 'rescheduled' : 'skipped')                    }));
+  const keepIds = new Set(kept.map(b => b.id));
+  const removed = autoF.filter(b => !keepIds.has(b.id)).map(b => b.id);
+  return { blocks: [...history, ...closed, ...future].sort(cmp), created: created.map(b => b.id), removed, statusChanged: closed.map(b => b.id), warnings };
+}
+;return{plan,priority,DEFAULT_SETTINGS,addDays,weekday,totalNeed}})();
+const EST=(()=>{                                                                                        
+
+/** Parámetros explícitos y ajustables. Son reglas orientativas, NO un modelo científico. */
+const PARAMS = {
+  baseMin: 35,   // min de un tema de cantidad 1, dificultad media, desde cero
+  taskBase: 25,  // min por unidad de cantidad en una tarea
+  diff: { 1: 0.7, 2: 0.85, 3: 1, 4: 1.2, 5: 1.4 }                          ,
+  type: { comprension: 1, memorizacion: 1.1, ejercicios: 1.15, problemas: 1.3, comentario: 1.2, practica: 1.1, mixto: 1.1 }                         ,
+  goal: { aprobar: 0.8, notable: 1, excelente: 1.25 }                        ,
+  mastery: [1, 0.6, 0.3, 0.12],  // fracción del trabajo que queda en 0,1,2,3 (interpolada)
+  split: { comprension: [0.7, 0.3], memorizacion: [0.6, 0.4], ejercicios: [0.3, 0.7], problemas: [0.35, 0.65], comentario: [0.4, 0.6], practica: [0.2, 0.8], mixto: [0.5, 0.5] }                                   , // [aprendizaje, práctica]
+  review: 0.15,                  // repaso: UNA sola vez, sobre (aprendizaje+práctica)
+  multClamp: [0.6, 1.8], topicClamp: [5, 300], examClamp: [20, 3000], taskClamp: [10, 600],
+  rangeInitial: 0.3, rangePersonal: 0.15, rangeProvisional: 0.1,
+  calClamp: [0.6, 1.6], window: 20, minValidMin: 5, maxOverrun: 3, minProgress: 0.2,
+};
+const clamp = (x        , a        , b        ) => Math.min(b, Math.max(a, x));
+const pct = (x        ) => `${x >= 0 ? '+' : '−'}${Math.abs(Math.round(x * 100))}%`;
+const fracMastery = (m        ) => { const t = PARAMS.mastery, x = clamp(m, 0, 3), i = Math.min(2, Math.floor(x)); return t[i] + (t[i + 1] - t[i]) * (x - i); };
+const mult = (d        , k       , g      ) => clamp((PARAMS.diff[Math.round(d)] ?? 1) * PARAMS.type[k] * PARAMS.goal[g], PARAMS.multClamp[0], PARAMS.multClamp[1]);
+
+// ---------- Aprendizaje personal: medianas robustas ----------
+                                                                                            
+                                                                   
+/** Cociente (tiempo necesario / tiempo previsto). null = registro no fiable (interrumpida, sin avance real, absurda). */
+function ratioOf(s        )                {
+  const { planned, log } = s;
+  if (log.interrupted || !(planned > 0) || !(log.actualMin >= PARAMS.minValidMin) || log.actualMin > planned * PARAMS.maxOverrun + 30) return null;
+  const p = log.goalMet ? 1 : clamp(log.progress / 100, 0, 1);
+  if (p < PARAMS.minProgress) return null;
+  return clamp(log.actualMin / p / planned, 0.5, 2);
+}
+const median = (a          ) => { const s = [...a].sort((x, y) => x - y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+/** Nivel más específico con datos suficientes (tipo≥5, asignatura≥5, global≥3); el ajuste crece gradualmente con n. */
+function calibrate(samples          , subjectId        , kind       )        {
+  const pick = (f                        ) => samples.filter(f).map(ratioOf).filter((r)              => r !== null).slice(-PARAMS.window);
+  const levels                               = [['tipo', pick(s => s.subjectId === subjectId && s.kind === kind), 5], ['asignatura', pick(s => s.subjectId === subjectId), 5], ['global', pick(() => true), 3]];
+  for (const [level, r, min] of levels) if (r.length >= min) {
+    const w = Math.min(1, (r.length - 2) / 8);
+    return { factor: clamp(1 + (median(r) - 1) * w, PARAMS.calClamp[0], PARAMS.calClamp[1]), n: r.length, level };
+  }
+  return { factor: 1, n: 0, level: 'ninguno' };
+}
+const NOCAL        = { factor: 1, n: 0, level: 'ninguno' };
+
+function build(a                                                                                                                                                                                                       )           {
+  const raw = (a.L + a.Pr + a.R) * a.cal.factor;
+  const rem = a.manualMin != null ? Math.max(0, a.manualMin - a.invested) : Math.max(0, raw - a.unattributed);
+  const s = raw > 0 ? rem / (raw) : 0, f = a.cal.factor * s;
+  const range = (a.cal.level !== 'ninguno' ? PARAMS.rangePersonal : PARAMS.rangeInitial) + (a.provisional ? PARAMS.rangeProvisional : 0);
+  const factors = [...a.factors];
+  if (a.manualMin != null) factors.push('Corregida manualmente por ti (total fijado; no cuenta como tiempo estudiado)');
+  factors.push(a.cal.level === 'ninguno' ? 'Estimación inicial: aún no hay historial suficiente' : `Ajustada a tu historial (${a.cal.level}, ${a.cal.n} sesiones válidas): ${pct(a.cal.factor - 1)}`);
+  const R = (x        ) => Math.round(x);
+  return { totalMin: R(a.invested + rem), investedMin: R(a.invested), remainingMin: R(rem), lowMin: R(rem * (1 - range)), highMin: R(rem * (1 + range)), learnMin: R(a.L * f), practiceMin: R(a.Pr * f), reviewMin: R(a.R * f),
+    perTopic: a.per.map(t => ({ id: t.id, name: t.name, remainingMin: R(t.t * f) })), factors, confidence: a.cal.level === 'ninguno' ? 'inicial' : 'personalizada', provisional: a.provisional, calibration: a.cal };
+}
+
+function estimateExam(i                                                                                                                         )           {
+  const P = PARAMS; let L = 0, Pr = 0, full = 0, dm = 0, sz = 0; const per                                            = [];
+  const [a, b] = P.split[i.kind];
+  for (const t of i.topics) {
+    const m = mult(t.difficulty, i.kind, i.goal), at0 = clamp(t.size * P.baseMin * m, P.topicClamp[0], P.topicClamp[1]);
+    const tt = clamp(t.size * P.baseMin * m * fracMastery(t.mastery), P.topicClamp[0], P.topicClamp[1]);
+    L += tt * a; Pr += tt * b; full += at0; per.push({ id: t.id, name: t.name, t: tt * (1 + P.review) }); dm += t.size * (P.diff[Math.round(t.difficulty)] ?? 1); sz += t.size;
+  }
+  let R = P.review * (L + Pr); const raw = L + Pr + R, c = clamp(raw, P.examClamp[0], P.examClamp[1]) / (raw || 1);
+  L *= c; Pr *= c; R *= c; per.forEach(t => t.t *= c);
+  const cur = L + Pr, dAvg = dm / (sz || 1), red = 1 - (cur / (c || 1)) / (full || 1);
+  const factors = [`${i.topics.length} tema(s), cantidad media ${(sz / (i.topics.length || 1)).toFixed(1)}/5`, `Dificultad ${dAvg > 1.1 ? 'alta' : dAvg < 0.92 ? 'baja' : 'media'} (${pct(dAvg - 1)})`,
+    ...(red > 0.02 ? [`Preparación previa: ${pct(-red)} del trabajo`] : []), `Tipo: ${i.kind} (${pct(P.type[i.kind] - 1)}) · objetivo: ${i.goal}`, `Repaso final incluido una vez: ${Math.round(R)} min`];
+  return build({ L, Pr, R, per, cal: i.cal ?? NOCAL, invested: i.invested ?? 0, unattributed: i.unattributed ?? 0, manualMin: i.manualMin, factors, provisional: i.topics.every(t => !t.explicit) });
+}
+function estimateTask(i                                                                                                       )           {
+  const P = PARAMS, m = mult(i.difficulty, i.kind, 'notable'), base = clamp(i.size * P.taskBase * m, P.taskClamp[0], P.taskClamp[1]);
+  const factors = [`Cantidad ${i.size}/5 · dificultad ${i.difficulty}/5 (${pct(m - 1)} por dificultad y tipo)`];
+  return build({ L: 0, Pr: base, R: 0, per: [], cal: i.cal ?? NOCAL, invested: i.invested ?? 0, unattributed: i.invested ?? 0, manualMin: i.manualMin, factors, provisional: i.size === 3 && i.difficulty === 3 });
+}
+
+const cmp = (a       , b       ) => a.date.localeCompare(b.date) || a.start - b.start || a.id.localeCompare(b.id);
+/** Recalcula la estimación de los trabajos ACTIVOS con estimador. No toca sesiones ni historial. Pura e idempotente. */
+function reestimate(works        , blocks         )         {
+  const byW = new Map(works.map(w => [w.id, w]));
+  const samples = blocks.filter(b => b.status === 'done' && b.log).sort(cmp).flatMap(b => { const w = byW.get(b.workId); return w ? [{ subjectId: w.subjectId, kind: (w.learn ?? 'mixto')         , planned: b.end - b.start, log: b.log  }] : []; });
+  return works.map(w => {
+    if ((w.status !== 'pending' && w.status !== 'in_progress') || !(w.topics?.length || w.autoEst)) return w;
+    const done = blocks.filter(b => b.workId === w.id && b.status === 'done'), mins = (b       ) => b.actualMin ?? b.end - b.start;
+    const invested = done.reduce((x, b) => x + mins(b), 0), unattributed = done.filter(b => !b.log?.topicId).reduce((x, b) => x + mins(b), 0);
+    const kind = w.learn ?? (w.kind === 'exam' ? 'mixto' : 'ejercicios'), cal = calibrate(samples, w.subjectId, kind);
+    if (w.topics?.length) {
+      const e = estimateExam({ topics: w.topics, kind, goal: w.goal ?? 'notable', cal, invested, unattributed, manualMin: w.manualEstMin });
+      const rd = Math.round(100 * w.topics.reduce((x, t) => x + t.mastery, 0) / (3 * w.topics.length));
+      return { ...w, estimate: e, estMin: Math.max(5, Math.round(e.totalMin / 5) * 5), readiness: rd };
+    }
+    const e = estimateTask({ kind, size: w.size ?? 3, difficulty: w.difficulty, cal, invested, manualMin: w.manualEstMin });
+    return { ...w, estimate: e, estMin: Math.max(5, Math.round(e.totalMin / 5) * 5) };
+  });
+}
+/** Asigna tema a cada sesión futura automática: primero los temas con más trabajo pendiente (difíciles y poco dominados). */
+function assignTopics(w      , blocks         )                         {
+  if (!w.topics?.length || !w.estimate) return {};
+  const rem = new Map(w.estimate.perTopic.map(t => [t.id, t.remainingMin])), out                         = {};
+  for (const b of blocks.filter(x => x.workId === w.id && x.status === 'planned' && !x.manual).sort(cmp)) {
+    let best                = null; for (const [id, r] of rem) if (best === null || r > rem.get(best) ) best = id;
+    if (best !== null) { out[b.id] = best; rem.set(best, rem.get(best)  - (b.end - b.start)); }
+  }
+  return out;
+}
+;return{reestimate,assignTopics,PARAMS}})();
+const ST=(()=>{                                                   
+const dur = (b       ) => b.end - b.start;
+/**
+ * Definiciones:
+ *  - Planificados: sesiones planned|done|skipped (las 'rescheduled' se excluyen: su trabajo pasó a otra sesión → no se cuenta dos veces).
+ *  - Completados: solo sesiones done (actualMin si existe, si no la duración).
+ *  - Cumplimiento = min programados de sesiones done / min programados de sesiones done+skipped (null si no hay ninguna resuelta).
+ */
+function stats(blocks         , works        , _now     ) {
+  const subj = new Map(works.map(w => [w.id, w.subjectId]));
+  const counts = { planned: 0, done: 0, skipped: 0, rescheduled: 0 };
+  const byDay                                                               = {};
+  const bySubject                         = {};
+  let plannedMin = 0, completedMin = 0, doneSched = 0, skippedSched = 0;
+  for (const b of blocks) {
+    counts[b.status]++;
+    if (b.status === 'rescheduled') continue;
+    const d = (byDay[b.date] ??= { plannedMin: 0, completedMin: 0 });
+    d.plannedMin += dur(b); plannedMin += dur(b);
+    if (b.status === 'done') {
+      const m = b.actualMin ?? dur(b); d.completedMin += m; completedMin += m; doneSched += dur(b);
+      const s = subj.get(b.workId) ?? '?'; bySubject[s] = (bySubject[s] ?? 0) + m;
+    } else if (b.status === 'skipped') skippedSched += dur(b);
+  }
+  const base = doneSched + skippedSched;
+  return { plannedMin, completedMin, counts, byDay, bySubject, compliance: base ? Math.round(100 * doneSched / base) : null };
+}
+;return{stats}})();
+const {plan,priority,DEFAULT_SETTINGS,addDays,weekday,totalNeed}=P,{stats}=ST,{reestimate,assignTopics}=EST;
+const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fm=m=>pad(Math.floor(m/60))+':'+pad(m%60),pm=t=>{const m=/^(\d{1,2}):(\d{2})$/.exec(t||'');return m?+m[1]*60+ +m[2]:null};
+const hr=m=>m>=60?Math.floor(m/60)+'h'+(m%60?pad(m%60):''):m+'min';
+const DOW=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],COL=['#c9a45c','#b87333','#8fa8c8','#9c8fc8','#7fb89a','#c88f8f','#d4c08a','#6f9fb0','#b08fb8'];
+const NAMES=['Matemáticas II','Física','Química','Business','Lengua Castellana','Catalán','Inglés','Historia de España','Historia de la Filosofía'];
+const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
+const now=()=>{const d=new Date();return{date:`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`,minute:d.getHours()*60+d.getMinutes()}};
+const okDate=s=>/^\d{4}-\d{2}-\d{2}$/.test(s)&&!isNaN(Date.parse(s));
+// ---- Repositorio (contrato en src/data/repository.ts). LIMITACIÓN: localStorage = solo este navegador/dispositivo.
+const KEY='focusos.v1',BAK='focusos.v1.backup',BAD='focusos.v1.corrupt',STS_=['planned','done','skipped','rescheduled'];
+function validate(s){if(!s||typeof s!=='object'||Array.isArray(s))return'El contenido no es un objeto.';
+ for(const k of['subjects','works','blocks'])if(!Array.isArray(s[k]))return'Falta la lista «'+k+'».';
+ if(!s.settings||typeof s.settings.availability!=='object'||!s.settings.availability)return'Faltan los ajustes.';
+ for(const k of['maxDayMin','preferredMin','maxSessionMin','minSessionMin','minGapMin'])if(!(s.settings[k]>=0))return'Ajuste no válido: '+k;
+ for(const d of Object.values(s.settings.availability))if(!Array.isArray(d)||d.some(w=>!w||!(w.end>w.start)))return'Disponibilidad no válida.';
+ if(!Array.isArray(s.settings.blockedDates))s.settings.blockedDates=[];
+ for(const x of s.subjects)if(!x||typeof x.id!=='string'||typeof x.name!=='string')return'Asignatura no válida.';
+ for(const w of s.works)if(!w||typeof w.id!=='string'||typeof w.title!=='string'||!['task','exam'].includes(w.kind)||!okDate(w.dueDate)||!(w.estMin>=0)||!STS.some(x=>x[0]===w.status))return'Tarea o examen no válido.';
+ for(const w of s.works){if(w.topics!==undefined&&(!Array.isArray(w.topics)||w.topics.some(x=>!x||typeof x.id!=='string'||typeof x.name!=='string'||!(x.mastery>=0&&x.mastery<=3)||!(x.size>=1&&x.size<=5)||!(x.difficulty>=1&&x.difficulty<=5))))return'Temas no válidos.';if(w.estimate!==undefined&&!(w.estimate&&w.estimate.remainingMin>=0&&Array.isArray(w.estimate.perTopic)&&Array.isArray(w.estimate.factors)))return'Estimación no válida.'}
+ const ids=new Set();for(const b of s.blocks){if(!b||typeof b.id!=='string'||!okDate(b.date)||!(b.start>=0)||!(b.end>b.start)||!STS_.includes(b.status)||(b.log!==undefined&&!(b.log&&b.log.actualMin>=0)))return'Sesión no válida.';if(ids.has(b.id))return'Sesión duplicada: '+b.id;ids.add(b.id)}
+ return null}
+const storedVer=()=>{try{return JSON.parse(localStorage.getItem(KEY)).version||0}catch{return 0}};
+// Repositorio (contrato en src/data/repository.ts). LIMITACIÓN: localStorage = solo este navegador/dispositivo.
+const repo={async load(){const raw=localStorage.getItem(KEY);if(raw==null)return{state:null};let s=null;try{s=JSON.parse(raw)}catch{}const e=validate(s);if(e){localStorage.setItem(BAD,raw);return{error:e}}return{state:s}},
+ async save(s){if(storedVer()>=s.version)throw new Error('Los datos cambiaron en otra pestaña o dispositivo. Recarga la página.');localStorage.setItem(KEY,JSON.stringify(s))}};
+let S,W=[],route='hoy',ws=null;
+const sub=id=>S.subjects.find(s=>s.id===id)||{name:'(sin asignatura)',color:'#777'},wk=id=>S.works.find(w=>w.id===id);
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',3500)};
+async function commit(){S.works=reestimate(S.works,S.blocks);const r=plan(S,now()),tm={};S.works.forEach(w=>{if(w.topics?.length&&(w.status==='pending'||w.status==='in_progress'))Object.assign(tm,assignTopics(w,r.blocks))});S.blocks=r.blocks.map(b=>tm[b.id]&&!b.manual&&b.topicId!==tm[b.id]?{...b,topicId:tm[b.id]}:b);W=r.warnings;S.version=(S.version||0)+1;try{await repo.save(S)}catch(e){toast('Error al guardar: '+e.message)}render()}
+function openForm(title,fields,ok,del){const d=$('#dlg');d.innerHTML=`<form id=f><h3>${esc(title)}</h3>${fields.map(f=>f.t==='note'?`<div class="card m">${f.v}</div>`:`<label>${esc(f.l)}${f.t==='select'?`<select name=${f.k}>${f.o.map(o=>`<option value="${esc(o[0])}" ${o[0]==f.v?'selected':''}>${esc(o[1])}</option>`).join('')}</select>`:f.t==='area'?`<textarea name=${f.k} rows=3>${esc(f.v)}</textarea>`:`<input name=${f.k} type=${f.t||'text'} value="${esc(f.v)}" ${f.min!=null?'min='+f.min:''} ${f.max!=null?'max='+f.max:''}>`}</label>`).join('')}<p class=err id=ferr></p><div class=row><button type=button data-a=close>Cancelar</button>${del?'<button type=button class=danger id=fdel>Eliminar</button>':''}<button class=pri>Guardar</button></div></form>`;d.showModal();
+ $('#f').onsubmit=e=>{e.preventDefault();const err=ok(Object.fromEntries(new FormData(e.target)));if(err)$('#ferr').textContent=err;else d.close()};
+ if(del)$('#fdel').onclick=()=>{if(confirm('¿Eliminar definitivamente? No se puede deshacer.')){const e=del();if(e)$('#ferr').textContent=e;else d.close()}}}
+const STS=[['pending','Pendiente'],['in_progress','En curso'],['done','Completada'],['archived','Archivada']];
+const KINDS=[['comprension','Comprensión'],['memorizacion','Memorización'],['ejercicios','Ejercicios'],['problemas','Problemas'],['comentario','Comentario de texto'],['practica','Práctica'],['mixto','Combinación']];
+const GOALS=[['aprobar','Aprobar'],['notable','Notable'],['excelente','Excelente']],MAST=[['0','Desde cero'],['1','Conocimiento parcial'],['2','Bastante dominado'],['3','Listo para repasar']],SIZES=[['1','1 · Muy poco'],['2','2 · Poco'],['3','3 · Normal'],['4','4 · Mucho'],['5','5 · Muchísimo']];
+const topicsText=w=>(w.topics||[]).map(x=>[x.name,x.difficulty,x.size,Math.round(x.mastery*10)/10].join('; ')).join('\n');
+function parseTopics(txt,old,defM){const out=[];for(const line of txt.split('\n').map(x=>x.trim()).filter(Boolean)){const p=line.split(';').map(x=>x.trim()),name=p[0],num=(v,d,a,b)=>{const n=v===undefined||v===''?d:+v;return n>=a&&n<=b?n:NaN},df=num(p[1],3,1,5),sz=num(p[2],3,1,5),ms=num(p[3],defM,0,3);if(!name||[df,sz,ms].some(isNaN))return{err:`Tema «${name}»: dificultad 1-5, cantidad 1-5, preparación 0-3.`};const o=old.find(x=>x.name===name);out.push({id:o?.id||uid(),name,difficulty:df,size:sz,mastery:ms,explicit:p.length>1})}return{topics:out}}
+const estNote=w=>{const e=w.estimate;if(!e)return'<b>Estimación:</b> se calculará al guardar. Si no sabes cuánto necesitas, déjalo en blanco.';const d=W.find(x=>x.workId===w.id&&x.type==='deficit');return`<b>Quedan ~${hr(e.remainingMin)}</b> (rango ${hr(e.lowMin)}–${hr(e.highMin)}) · invertido ${hr(e.investedMin)} · total ${hr(e.totalMin)}<br>Aprendizaje ${hr(e.learnMin)} · práctica ${hr(e.practiceMin)} · repaso ${hr(e.reviewMin)}${e.perTopic.length?'<br>'+e.perTopic.map(x=>esc(x.name)+' '+hr(x.remainingMin)).join(' · '):''}<br>${e.factors.map(esc).join('<br>')}<br><b>${e.confidence==='inicial'?'Estimación inicial':'Personalizada con tu historial'}${e.provisional?' (provisional)':''}</b><br>${d?'⚠ Déficit de '+hr(d.deficitMin)+': amplía disponibilidad, baja el objetivo o mueve la fecha.':'✓ Cabe en tu calendario'}`};
+function workForm(kind,id){const w=id?wk(id):{},E=kind==='exam',subs=S.subjects.filter(s=>!s.archived).map(s=>[s.id,s.name]);if(!subs.length)return toast('Crea primero una asignatura');
+ const ov=w.manualEstMin??(w.autoEst===false||(w.autoEst===undefined&&w.estMin&&!w.topics)?w.estMin:'');
+ openForm((id?'Editar ':'Nuevo ')+(E?'examen':'tarea'),[...(id&&w.estimate?[{t:'note',v:estNote(w)}]:[]),{k:'title',l:E?'Nombre / contenido':'Título',v:w.title||''},{k:'subjectId',l:'Asignatura',t:'select',o:subs,v:w.subjectId||subs[0][0]},{k:'dueDate',l:E?'Fecha del examen':'Fecha límite',t:'date',v:w.dueDate||''},{k:'time',l:'Hora (opcional)',t:'time',v:w.dueMinute!=null?fm(w.dueMinute):''},
+  {k:'learn',l:E?'Tipo de aprendizaje':'Tipo de actividad',t:'select',o:KINDS,v:w.learn||(E?'mixto':'ejercicios')},
+  ...(E?[{k:'goal',l:'Nivel que quieres alcanzar',t:'select',o:GOALS,v:w.goal||'notable'},{k:'topics',l:'Temas, uno por línea: Nombre; dificultad 1-5; cantidad 1-5; preparación 0-3 (los números son opcionales)',t:'area',v:topicsText(w)},{k:'prep',l:'Preparación actual por defecto (temas sin número)',t:'select',o:MAST,v:'0'}]:[{k:'size',l:'Cantidad de trabajo',t:'select',o:SIZES,v:String(w.size||3)},{k:'difficulty',l:'Dificultad (1-5)',t:'number',min:1,max:5,v:w.difficulty||3}]),
+  {k:'importance',l:'Importancia (1-5)',t:'number',min:1,max:5,v:w.importance||3},{k:'estOverride',l:'Minutos totales (opcional: déjalo vacío para estimación automática)',t:'number',min:5,v:ov??''},{k:'status',l:'Estado',t:'select',o:STS,v:w.status||'pending'},{k:'notes',l:E?'Recursos y notas':'Notas y subtareas (una por línea)',t:'area',v:w.notes||''}],v=>{
+  if(!v.title.trim())return'El título es obligatorio.';if(!okDate(v.dueDate))return'Indica una fecha válida.';const df=+(v.difficulty||3),im=+v.importance,over=v.estOverride===''||v.estOverride==null?null:+v.estOverride;
+  if(over!=null&&!(over>=5&&over<=6000))return'Los minutos deben estar entre 5 y 6000, o vacío para estimar automáticamente.';if(!(df>=1&&df<=5&&im>=1&&im<=5))return'Dificultad e importancia: de 1 a 5.';
+  let topics;if(E){const r=parseTopics(v.topics||'',w.topics||[],+(v.prep||0));if(r.err)return r.err;topics=r.topics.length?r.topics:over?undefined:[{id:uid(),name:v.title.trim(),difficulty:3,size:3,mastery:+(v.prep||0)}]}
+  const o={...w,id:w.id||uid(),kind,title:v.title.trim(),subjectId:v.subjectId,dueDate:v.dueDate,dueMinute:v.time?pm(v.time):undefined,difficulty:df,importance:im,learn:v.learn||'ejercicios',status:v.status,notes:v.notes,createdAt:w.createdAt||Date.now(),updatedAt:Date.now(),manualEstMin:over??undefined,autoEst:over==null,estMin:over??w.estMin??60,
+   ...(E?{goal:v.goal||'notable',topics,readiness:topics?w.readiness??0:Math.round(+(v.prep||0)/3*100)}:{size:+(v.size||3),readiness:0})};
+  if(over!=null&&over!==w.manualEstMin)o.corrections=[...(w.corrections||[]),{at:Date.now(),from:w.estimate?.totalMin??w.estMin??null,to:over}];
+  if(!(E?topics:true)&&over!=null||over!=null&&!E)o.estimate=undefined;
+  S.works=id?S.works.map(x=>x.id===id?o:x):[...S.works,o];commit()},id&&(()=>{if(S.blocks.some(b=>b.workId===id&&b.status==='done'))return'Tiene sesiones completadas: márcala como Archivada para conservar el historial.';S.works=S.works.filter(x=>x.id!==id);S.blocks=S.blocks.filter(b=>b.workId!==id);commit()}))}
+function logForm(id){const b=S.blocks.find(x=>x.id===id),w=wk(b.workId)||{},tp=(w.topics||[]).map(x=>[x.id,x.name]);
+ openForm('Registrar sesión',[{k:'actualMin',l:'Minutos reales de estudio',t:'number',min:1,v:b.end-b.start},...(tp.length?[{k:'topicId',l:'Tema trabajado',t:'select',o:[['','(ninguno / varios)'],...tp],v:b.topicId||''}]:[]),{k:'goalMet',l:'¿Alcanzaste el objetivo de la sesión?',t:'select',o:[['1','Sí'],['0','No del todo']],v:'1'},{k:'progress',l:'Progreso aproximado en el tema (% del trabajo que le quedaba)',t:'number',min:0,max:100,v:60},{k:'difficulty',l:'Dificultad encontrada (1-5)',t:'number',min:1,max:5,v:3},{k:'interrupted',l:'¿Interrupciones importantes?',t:'select',o:[['0','No'],['1','Sí']],v:'0'}],v=>{
+  const am=+v.actualMin,pr=+(v.progress??60),df=+(v.difficulty??3);if(!(am>=1&&am<=600))return'Los minutos reales deben estar entre 1 y 600.';if(!(pr>=0&&pr<=100))return'El progreso va de 0 a 100.';if(!(df>=1&&df<=5))return'Dificultad de 1 a 5.';
+  const topicId=v.topicId||undefined;b.status='done';b.actualMin=am;b.log={actualMin:am,topicId,progress:pr,difficulty:df,goalMet:v.goalMet!=='0',interrupted:v.interrupted==='1'};
+  if(topicId&&w.topics){S.works=S.works.map(x=>x.id!==w.id?x:{...x,topics:x.topics.map(y=>y.id===topicId?{...y,mastery:Math.min(3,Math.round((y.mastery+(3-y.mastery)*pr/100)*1000)/1000)}:y)})}commit()})}
+function blkForm(id){const b=id?S.blocks.find(x=>x.id===id):{},ws_=S.works.filter(w=>w.status==='pending'||w.status==='in_progress').map(w=>[w.id,sub(w.subjectId).name+' · '+w.title]);if(!ws_.length)return toast('No hay tareas ni exámenes activos');
+ openForm(id?'Mover sesión':'Nueva sesión manual',[{k:'workId',l:'Trabajo',t:'select',o:ws_,v:b.workId||ws_[0][0]},{k:'date',l:'Fecha',t:'date',v:b.date||now().date},{k:'s',l:'Inicio',t:'time',v:b.start!=null?fm(b.start):'17:00'},{k:'e',l:'Fin',t:'time',v:b.end!=null?fm(b.end):'18:00'}],v=>{
+  const s=pm(v.s),e=pm(v.e),n=now();if(!okDate(v.date)||s==null||e==null||e<=s)return'Revisa fecha y horas (el fin debe ser posterior al inicio).';if(v.date<n.date||(v.date===n.date&&s<n.minute))return'No se puede programar en el pasado.';
+  if(S.blocks.some(x=>x.id!==id&&x.date===v.date&&(x.status==='planned'||x.status==='done')&&x.start<e&&s<x.end))return'Se solapa con otra sesión.';
+  const nb={...b,id:id||'man:'+uid(),workId:v.workId,date:v.date,start:s,end:e,status:'planned',manual:true};S.blocks=id?S.blocks.map(x=>x.id===id?nb:x):[...S.blocks,nb];commit()})}
+const blk=b=>{const w=wk(b.workId)||{},s=sub(w.subjectId);return`<div class="blk ${b.status} ${b.manual?'manual':''}" style="--c:${s.color}"><b>${fm(b.start)}–${fm(b.end)}</b> ${esc(s.name)}<small>${esc(w.title||'')}${b.part==='review'?' · repaso':''}${b.topicId?' · '+esc(((wk(b.workId)||{}).topics||[]).find(x=>x.id===b.topicId)?.name||''):''}${b.manual?' · manual':''}</small>${b.status==='planned'?`<button data-a=doneBlk data-id="${b.id}">Hecho</button><button data-a=editBlk data-id="${b.id}">Mover</button>${b.manual?`<button class=danger data-a=delBlk data-id="${b.id}">Quitar</button>`:''}`:`<em>${{done:'Completada',skipped:'Omitida',rescheduled:'Reprogramada'}[b.status]}</em>`}</div>`};
+const act=()=>S.works.filter(w=>w.status==='pending'||w.status==='in_progress');
+const prio=w=>{const p=priority(w,now());return p>=17?['Alta','hi']:p>=12?['Media','']:['Baja','']};
+const estLine=w=>{const e=w.estimate;if(!e||w.status==='done'||w.status==='archived')return'';const d=W.find(x=>x.workId===w.id&&x.type==='deficit');return`<small>Quedan ${hr(e.remainingMin)} (${hr(e.lowMin)}–${hr(e.highMin)}) · ${hr(e.investedMin)} invertidas · ${e.confidence==='inicial'?'inicial':'personalizada'}${e.provisional?' · provisional':''} · ${d?'<span style="color:var(--red)">déficit '+hr(d.deficitMin)+'</span>':'cabe en el calendario'}</small>`};
+const wrow=w=>{const s=sub(w.subjectId),[p,c]=prio(w);return`<div class="card item" style="--c:${s.color}" data-a=${w.kind==='exam'?'editExam':'editTask'} data-id="${w.id}">${w.kind==='task'?`<button data-a=toggle data-id="${w.id}" aria-label="Completar">${w.status==='done'?'↺':'✓'}</button>`:''}<span class=dot></span><div><b${w.status==='done'?' style="text-decoration:line-through"':''}>${esc(w.title)}</b><small>${esc(s.name)} · ${w.dueDate}${w.dueMinute!=null?' '+fm(w.dueMinute):''} · ${hr(w.estMin)}${w.kind==='exam'?' · prep. '+w.readiness+'%':''}</small>${estLine(w)}</div>${w.status==='pending'||w.status==='in_progress'?`<span class="tag ${c}">${p}</span>`:`<em>${STS.find(x=>x[0]===w.status)[1]}</em>`}</div>`};
+const V={};
+V.hoy=()=>{const n=now(),tb=S.blocks.filter(b=>b.date===n.date&&b.status!=='rescheduled').sort((a,b)=>a.start-b.start),st=stats(tb,S.works,n),mon=addDays(n.date,-((weekday(n.date)+6)%7)),sw=stats(S.blocks.filter(b=>b.date>=mon&&b.date<=addDays(mon,6)),S.works,n);
+ const ex=act().filter(w=>w.kind==='exam'&&w.dueDate>=n.date).sort((a,b)=>a.dueDate.localeCompare(b.dueDate)).slice(0,3),od=act().filter(w=>w.kind==='task'&&w.dueDate<n.date),top=act().sort((a,b)=>priority(b,n)-priority(a,n)).slice(0,4),nx=S.blocks.filter(b=>b.status==='planned'&&(b.date>n.date)).sort((a,b)=>a.date.localeCompare(b.date)||a.start-b.start).slice(0,3);
+ return`<h1>Hoy</h1><p class=m>${DOW[weekday(n.date)]} ${n.date}</p>${W.map(w=>`<div class="card warn">⚠ ${esc(w.message)}</div>`).join('')}<div class=row style="justify-content:flex-start;margin:0 0 14px"><button class=pri data-a=addTask>+ Tarea</button><button class=pri data-a=addExam>+ Examen</button><button data-a=addBlk>+ Sesión</button></div>
+ <div class=grid><div class=card><h3>Hoy</h3><b>${hr(st.completedMin)}</b> completados de <b>${hr(st.plannedMin)}</b> planificados<div class=bar><i style="width:${st.plannedMin?Math.min(100,100*st.completedMin/st.plannedMin):0}%"></i></div></div><div class=card><h3>Esta semana</h3><b>${hr(sw.completedMin)}</b> de <b>${hr(sw.plannedMin)}</b><div class=bar><i style="width:${sw.plannedMin?Math.min(100,100*sw.completedMin/sw.plannedMin):0}%"></i></div></div></div>
+ <h2>Sesiones de hoy</h2>${tb.map(blk).join('')||'<p class=m>Sin sesiones hoy.</p>'}${nx.length?`<h3>Próximas</h3>${nx.map(b=>`<p class=m>${b.date.slice(5)} · ${blk(b).replace(/<button.*?<\/button>/g,'')}</p>`).join('')}`:''}
+ <h2>Prioridades</h2>${top.map(wrow).join('')||'<p class=m>Nada pendiente.</p>'}${ex.length?`<h2>Próximos exámenes</h2>${ex.map(wrow).join('')}`:''}${od.length?`<h2>Atrasadas</h2>${od.map(wrow).join('')}`:''}`};
+V.tar=()=>{const l=S.works.filter(w=>w.kind==='task').sort((a,b)=>(a.status==='done')-(b.status==='done')||a.dueDate.localeCompare(b.dueDate));return`<h1>Tareas</h1><button class=pri data-a=addTask>+ Nueva tarea</button><br><br>${l.map(wrow).join('')||'<p class=m>Aún no hay tareas.</p>'}`};
+V.exa=()=>{const l=S.works.filter(w=>w.kind==='exam').sort((a,b)=>a.dueDate.localeCompare(b.dueDate));return`<h1>Exámenes</h1><button class=pri data-a=addExam>+ Nuevo examen</button><br><br>${l.map(wrow).join('')||'<p class=m>Aún no hay exámenes.</p>'}`};
+V.cal=()=>{const n=now();ws=ws||addDays(n.date,-((weekday(n.date)+6)%7));const ds=[...Array(7)].map((_,i)=>addDays(ws,i));
+ return`<h1>Calendario</h1><div class=row style="justify-content:flex-start;margin:0 0 12px"><button data-a=wk data-k=-7>←</button><button data-a=wk data-k=0>Hoy</button><button data-a=wk data-k=7>→</button><button data-a=addBlk>+ Sesión</button><button data-a=replan>Regenerar futuro</button></div><div class=wk>${ds.map(d=>`<div><h3>${DOW[weekday(d)]} ${d.slice(8)}${d===n.date?' ●':''}</h3>${S.blocks.filter(b=>b.date===d).sort((a,b)=>a.start-b.start).map(blk).join('')||'<small>—</small>'}</div>`).join('')}</div><p class=m>Los bloques de estudio solo se colocan dentro de la disponibilidad definida en Ajustes. “Mover” convierte una sesión en manual (protegida).</p>`};
+V.asg=()=>`<h1>Asignaturas</h1><button class=pri data-a=addSub>+ Asignatura</button><br><br>${S.subjects.map(s=>{const ws_=S.works.filter(w=>w.subjectId===s.id),min=S.blocks.filter(b=>b.status==='done'&&ws_.some(w=>w.id===b.workId)).reduce((a,b)=>a+(b.actualMin??b.end-b.start),0);return`<div class="card item" style="--c:${s.color}" data-a=editSub data-id="${s.id}"><span class=dot></span><div><b>${esc(s.name)}</b><small>${ws_.filter(w=>w.kind==='task').length} tareas · ${ws_.filter(w=>w.kind==='exam').length} exámenes · ${hr(min)} estudiadas</small></div>${s.archived?'<em>Archivada</em>':''}</div>`}).join('')}`;
+V.seg=()=>{const n=now(),st=stats(S.blocks,S.works,n),ds=[...Array(7)].map((_,i)=>addDays(n.date,i-6)),mx=Math.max(60,...ds.map(d=>Math.max(st.byDay[d]?.plannedMin||0,st.byDay[d]?.completedMin||0))),sm=Math.max(1,...Object.values(st.bySubject));
+ return`<h1>Seguimiento</h1><div class=grid><div class=card><h3>Completado</h3><b>${hr(st.completedMin)}</b></div><div class=card><h3>Planificado</h3><b>${hr(st.plannedMin)}</b></div><div class=card><h3>Cumplimiento</h3><b>${st.compliance==null?'—':st.compliance+'%'}</b></div></div>
+ <p class=m>Cumplimiento = minutos de sesiones completadas ÷ minutos de sesiones completadas + omitidas. Las sesiones reprogramadas no se cuentan dos veces. Sesiones: ${st.counts.planned} previstas · ${st.counts.done} hechas · ${st.counts.skipped} omitidas · ${st.counts.rescheduled} reprogramadas.</p>
+ <div class=card><h3>Últimos 7 días (hueco = planificado, dorado = completado)</h3><div class=cols>${ds.map(d=>{const x=st.byDay[d]||{plannedMin:0,completedMin:0};return`<div title="${d}"><i class=p style="height:${100*x.plannedMin/mx}%"></i><i style="height:${100*x.completedMin/mx}%"></i></div>`}).join('')}</div><div class=cols style="height:auto;margin-top:4px">${ds.map(d=>`<small style="flex:1;text-align:center">${DOW[weekday(d)]}</small>`).join('')}</div></div>
+ <div class=card><h3>Por asignatura (tiempo completado)</h3>${Object.entries(st.bySubject).map(([id,m])=>`<div>${esc(sub(id).name)} · ${hr(m)}<div class=bar><i style="width:${100*m/sm}%;background:${sub(id).color}"></i></div></div>`).join('')||'<p class=m>Aún no has completado sesiones.</p>'}</div>`};
+V.aj=()=>{const s=S.settings,N=[['maxDayMin','Máx. estudio al día (min)'],['preferredMin','Duración preferida de sesión (min)'],['maxSessionMin','Duración máxima de sesión (min)'],['minSessionMin','Duración mínima de sesión (min)'],['minGapMin','Descanso mínimo entre sesiones (min)']];
+ return`<h1>Ajustes</h1><form id=sf class=card><h3>Disponibilidad semanal</h3><p class=m>Ventanas donde se permite estudiar: HH:MM-HH:MM separadas por comas. Deja fuera clases, trayecto, comidas, descansos y sueño (inicial: levantarse 07:00, acostarse 22:30). Vacío = sin estudio ese día.</p>${[1,2,3,4,5,6,0].map(d=>`<label>${DOW[d]}<input name=d${d} value="${(s.availability[d]||[]).map(w=>fm(w.start)+'-'+fm(w.end)).join(', ')}"></label>`).join('')}<h3>Límites</h3>${N.map(([k,l])=>`<label>${l}<input name=${k} type=number min=0 value=${s[k]}></label>`).join('')}<p class=err id=serr></p><button class=pri>Guardar y replanificar</button></form><div class=card><h3>Datos</h3><p class=m>Almacenamiento provisional: <b>localStorage de este navegador</b> (no es nube ni multiusuario). Safari puede borrar los datos de webs que no abres en 7 días: instala la app en la pantalla de inicio (Compartir → Añadir a pantalla de inicio) y exporta una copia cada semana.</p><div class=row style="justify-content:flex-start"><button data-a=export>Exportar copia JSON</button>${localStorage.getItem(BAK)?'<button data-a=undoImport>Deshacer última importación</button>':''}</div><label>Importar copia JSON (pide confirmación y guarda antes una copia automática)<input type=file id=imp accept=".json,application/json"></label></div>`};
+const A={nav:t=>{route=t.dataset.r;render()},close:()=>$('#dlg').close(),addTask:()=>workForm('task'),addExam:()=>workForm('exam'),editTask:t=>workForm('task',t.dataset.id),editExam:t=>workForm('exam',t.dataset.id),
+ toggle:t=>{const w=wk(t.dataset.id);w.status=w.status==='done'?'pending':'done';w.updatedAt=Date.now();commit()},doneBlk:t=>logForm(t.dataset.id),addBlk:()=>blkForm(),editBlk:t=>blkForm(t.dataset.id),
+ delBlk:t=>{if(confirm('¿Quitar esta sesión manual?')){S.blocks=S.blocks.filter(b=>b.id!==t.dataset.id);commit()}},wk:t=>{ws=t.dataset.k==='0'?null:addDays(ws,+t.dataset.k);render()},replan:()=>{commit();toast('Planificación futura regenerada')},
+ addSub:()=>subForm(),editSub:t=>subForm(t.dataset.id),export:()=>dl(JSON.stringify({app:'focus-os',schema:2,exportedAt:new Date().toISOString(),...S},null,1),`focus-os-copia-${now().date}.json`),dlBad:()=>dl(localStorage.getItem(BAD)||'','focus-os-datos-danados.json'),
+ fresh:()=>{if(confirm('¿Empezar de cero? La copia dañada se conservará aparte.')){S=fresh();commit()}},
+ undoImport:()=>{const raw=localStorage.getItem(BAK);let o=null;try{o=JSON.parse(raw)}catch{}const e=validate(o);if(e)return toast('No hay copia automática válida.');if(!confirm('¿Restaurar los datos anteriores a la última importación?'))return;localStorage.setItem(BAK,JSON.stringify(S));o.version=Math.max(S.version,storedVer());S=o;commit()}};
+function subForm(id){const s=id?sub(id):{};openForm(id?'Editar asignatura':'Nueva asignatura',[{k:'name',l:'Nombre',v:s.name||''},{k:'color',l:'Color',t:'color',v:s.color||COL[S.subjects.length%COL.length]},...(id?[{k:'archived',l:'Estado',t:'select',o:[['0','Activa'],['1','Archivada']],v:s.archived?'1':'0'}]:[])],v=>{if(!v.name.trim())return'El nombre es obligatorio.';const o={...s,id:s.id||uid(),name:v.name.trim(),color:v.color,archived:v.archived==='1'};S.subjects=id?S.subjects.map(x=>x.id===id?o:x):[...S.subjects,o];commit()},id&&(()=>{if(S.works.some(w=>w.subjectId===id))return'Tiene tareas o exámenes: archívala en su lugar.';S.subjects=S.subjects.filter(x=>x.id!==id);commit()}))}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(t&&A[t.dataset.a]){e.stopPropagation();A[t.dataset.a](t)}});
+document.addEventListener('submit',e=>{if(e.target.id!=='sf')return;e.preventDefault();const v=Object.fromEntries(new FormData(e.target)),av={},er=$('#serr');
+ for(let d=0;d<7;d++){const ws_=[];for(const p of(v['d'+d]||'').split(',').map(x=>x.trim()).filter(Boolean)){const m=/^(\d{1,2}:\d{2})-(\d{1,2}:\d{2})$/.exec(p),a=m&&pm(m[1]),b=m&&pm(m[2]);if(!m||a==null||b==null||b<=a||b>1440)return er.textContent=`${DOW[d]}: formato inválido “${p}”.`;ws_.push({start:a,end:b})}ws_.sort((x,y)=>x.start-y.start);if(ws_.some((w,i)=>i&&ws_[i-1].end>w.start))return er.textContent=`${DOW[d]}: ventanas solapadas.`;av[d]=ws_}
+ const n={};for(const k of['maxDayMin','preferredMin','maxSessionMin','minSessionMin','minGapMin']){n[k]=+v[k];if(!(n[k]>=0))return er.textContent='Valores numéricos no válidos.'}
+ if(n.minSessionMin<5||n.preferredMin<n.minSessionMin||n.maxSessionMin<n.preferredMin)return er.textContent='Debe cumplirse: 5 ≤ mínima ≤ preferida ≤ máxima.';
+ S.settings={...S.settings,...n,availability:av};commit();toast('Ajustes guardados y planificación recalculada')});
+function render(){document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.r===route));$('#main').innerHTML=V[route]()}
+const tick=()=>{if(S&&!$('#dlg').open&&route!=='aj')commit()};
+const dl=(txt,name)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
+const fresh=()=>({version:storedVer(),subjects:NAMES.map((name,i)=>({id:uid(),name,color:COL[i]})),works:[],blocks:[],settings:DEFAULT_SETTINGS});
+function recovery(err){S=null;$('#main').innerHTML=`<h1>Datos no válidos</h1><div class="card warn">${esc(err)}</div><p class=m>No se ha sobrescrito nada: la copia dañada sigue guardada en este navegador. Puedes descargarla, importar una copia JSON válida o empezar de cero (la dañada se conserva aparte).</p><div class=row style="justify-content:flex-start"><button data-a=dlBad>Descargar copia dañada</button><button class=danger data-a=fresh>Empezar de cero</button></div><label>Importar copia JSON<input type=file id=imp accept=".json,application/json"></label>`}
+function importText(text){let o;try{o=JSON.parse(text)}catch{toast('El archivo no es un JSON válido.');return'json'}
+ const e=validate(o);if(e){toast('Copia no válida: '+e);return e}
+ if(!confirm(`Importar copia: ${o.subjects.length} asignaturas, ${o.works.length} tareas/exámenes, ${o.blocks.length} sesiones.\nSe guardará una copia automática de tus datos actuales y después se reemplazarán. ¿Continuar?`))return'cancelado';
+ const cur=localStorage.getItem(KEY);if(cur)localStorage.setItem(BAK,cur);
+ const {app,schema,exportedAt,...st}=o;st.version=Math.max(S?.version||0,o.version||0,storedVer());S=st;commit();toast('Copia importada');return null}
+document.addEventListener('change',async e=>{if(e.target.id==='imp'&&e.target.files[0]){importText(await e.target.files[0].text());e.target.value=''}});
+async function boot(){let r;try{r=await repo.load()}catch(e){r={error:e.message}}if(r.error)return recovery(r.error);
+ S=r.state||fresh();try{navigator.storage.persist()}catch{}await commit();setInterval(tick,60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick()})}
+boot();
+
+</script></body></html>
